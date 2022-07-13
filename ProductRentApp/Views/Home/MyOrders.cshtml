@@ -1,0 +1,25 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IList<ProductRentApp.Models.OrderDetail>
+
+
+@for (int i = 0; i < Model.Count(); i++)
+    {
+    <div class="container bg-light text-dark" style="border-radius:30px;">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="~/Images/@Model[i].ProductImage" height="200" width="230" style="border-radius:25px;" />
+            </div>
+            <div class="col-md-8">
+                <h3 class="text-md-center"><span class="text-danger">Purchased Product :</span>        @Model[i].ProductAdtitle</h3>
+                <h3 class="text-md-center"><span class="text-danger">Order ID :</span>                 @Model[i].OrderId</h3>
+                <h5 class="text-md-center"><span class="text-danger">Details :</span>                  @Model[i].ProductDescription</h5>
+                <h5 class="text-md-center"><span class="text-danger">Order Information :</span>        @Model[i].OrderDate at @Model[i].OrderTime</h5>
+                <h5 class="text-md-center"><span class="text-danger">Order Status :</span>             @Model[i].OrderStatus</h5>
+            </div>
+        </div>
+    </div>
+    <hr />
+
+}

@@ -1,0 +1,68 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ProductRentApp.Models.ListedProductsPending
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body>
+    <ul class="nav nav-pills nav-fill">
+        <li class="nav-item">
+            <a id="step1tab" class="nav-link" onClick="switchPill(1)" href="@Url.Action("ADRequests", "Admin")">AD Requests</a>
+        </li>
+        <li class="nav-item">
+            <a id="step2tab" class="nav-link" onClick="switchPill(2)" href="@Url.Action("UserVerification", "Admin")">User Verification</a>
+        </li>
+        <li class="nav-item">
+            <a id="step3tab" class="nav-link" onClick="switchPill(3)" href="@Url.Action("ReturnRequest", "Admin")">Return Requests</a>
+        </li>
+        <li class="nav-item">
+            <a id="step4tab" class="nav-link" onClick="switchPill(4)" href="@Url.Action("ListedProd", "Admin")">Listed Products</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a id="step5tab" onClick="switchPill(5)" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Profile</a>
+            <div class="dropdown-menu">
+                <p class="dropdown-item">UserName : @ViewBag.adminid<br />Gmail : @ViewBag.adminname<br />City : @ViewBag.adminloc</p>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="@Url.Action("Login", "LogReg")">Logout</a>
+            </div>
+        </li>
+    </ul>
+    <br />
+    <div class="row">
+        <div class="col-6">
+            <div class="card text-white bg-warning mb-3" style="max-width: 18rem;margin-left:100px;">
+                <div class="card-header text-center font-weight-bold">AD Requests</div>
+                <div class="card-body text-center">
+                    <h5 class="card-title">AD Requests</h5>
+                    <h4 class="card-text">@ViewBag.pending</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;margin-left:100px;">
+                <div class="card-header text-center font-weight-bold">AD Approved</div>
+                <div class="card-body text-center">
+                    <h5 class="card-title">Approved AD's </h5>
+                    <h4 class="card-text">@ViewBag.approved</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</body >
+
+@section Scripts{ 
+<script type="text/javascript" language="javascript">
+    function switchPill(a) {
+        for (var i = 1; i <= 5; i++) {
+            if (i == a) {
+                $("#step" + a + "tab").addClass("active");
+            }
+            else {
+                $("#step" + i + "tab").removeClass("active");
+
+            }
+        }
+    }
+</script>}

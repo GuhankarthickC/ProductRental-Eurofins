@@ -1,0 +1,163 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<ProductRentApp.Models.ListedProductsPending>
+<head>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="col-md-12">
+        <table class="table table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductCategory)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Brand)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Model)
+                    </th>
+                    <th>
+                        Rental Fee
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductDescription)
+                    </th>
+                    <th>
+                        Details
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-light">
+                @foreach (var item in Model)
+                {
+                    if (item.PostStatus == "Pending")
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProductCategory)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProductType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Brand)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Model)
+                            </td>
+                            <td>
+                                Rs. @Html.DisplayFor(modelItem => item.RentalFee)/@Html.DisplayFor(modelItem => item.RentalDuration)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProductDescription)
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#tips-@item.ProductId">
+                                    AD Details
+                                </button>
+                                <div class="modal fade" id="tips-@item.ProductId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-dark text-white">
+                                                <h5 class="modal-title" id="exampleModalLabel">AD Request No : @item.ProductId</h5>
+                                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h4>
+                                                                @Html.DisplayNameFor(model => model.ProductCategory)
+                                                            </h4>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <h4>
+                                                                <small class="text-muted">@item.ProductCategory</small>
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h4>
+                                                                @Html.DisplayNameFor(model => model.ProductType)
+                                                            </h4>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <h4>
+                                                                <small class="text-muted">@item.ProductType</small>
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h4>
+                                                                @Html.DisplayNameFor(model => model.ProductImage)
+                                                            </h4>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <img src="~/Images/@item.ProductImage" height="200" width="200" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h4>
+                                                                Rental Fee
+                                                            </h4>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <h4>
+                                                                <small class="text-muted">Rs. @item.RentalFee / @item.RentalDuration</small>
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h4>
+                                                                @Html.DisplayNameFor(model => model.PostStatus)
+                                                            </h4>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <h4>
+                                                                <small class="text-warning">Approval @item.PostStatus</small>
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <a class="btn btn-primary" href="@Url.Action("approved", "Admin", new { id = item.ProductId })">Approve AD</a>
+                                                <a class="btn btn-primary" onclick="return confirm('Action is irreversible, proceed?')" href="@Url.Action("reject", "Admin", new { id = item.ProductId })">Reject AD</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+            </tbody>
+            </table>
+        </div>
+   </body>

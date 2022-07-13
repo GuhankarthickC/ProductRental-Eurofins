@@ -1,0 +1,114 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<ProductRentApp.Models.CartItem>
+    <head>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/v4-shims.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+@if (Model.Count()==0)
+{
+    <div class="row">
+        <div class="col-md-12 bg-light text-danger text-center font-weight-bold">
+            <h2>Oops! You Missed. Add Items to cart.</h2>
+        </div>
+    </div>
+}
+else { 
+
+<div class="col-md-12">
+    <table class="table table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Cart Items
+                </th>
+                <th>
+                    Rental Fee
+                </th>
+                <th>
+                    Product Description
+                </th>
+                <th>
+                    Delete Product
+                </th>
+                <th>
+                    Order Confirmation
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-light">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AdTitle)
+                    </td>
+                    <td>
+                        Rs. @Html.DisplayFor(modelItem => item.RentalFee) /  @Html.DisplayFor(modelItem => item.RentalDuration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductDescription)
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="@Url.Action("DeleteCartItem", "Home" , new {cartid=item.CartItemId})"><i class="fas fa-xmark"></i></a>
+                    </td>
+                    <td>
+                        <button type="button" class="text-dark btn btn-warning" style="border-radius: 8px; font-family: Georgia, 'Times New Roman', Times, serif;" data-toggle="modal" data-target="#ti-1">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <div class="modal fade" id="ti-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalScrollableTitle"><span class="text-danger">*</span> Terms and Conditions</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="text-lowercase">
+                                            2.1 The Conditions apply to the Contract to the exclusion of any other terms that the Customer seeks to impose or incorporate, or
+                                            which are implied by trade, custom, practice or course of dealing.
+                                            2.2 The Order constitutes an offer by the Customer to hire the Equipment in accordance with these Conditions. The Customer is
+                                            responsible for ensuring that the terms of the Order are complete and accurate.
+                                            2.3 The Order shall only be deemed to be accepted when Oceanscan issues a written acceptance of the Order, at which point the
+                                            Contract shall come into existence.
+                                            2.4 The Contract constitutes the entire agreement between the parties. The Customer acknowledges that it has not relied on any
+                                            statement, promise, representation, assurance or warranty made or given by or on behalf of Oceanscan which is not set out in
+                                            the Contract.
+                                            2.5 Any samples, drawings, descriptive matter, or advertising produced by Oceanscan and any descriptions or illustrations
+                                            contained in Oceanscan's catalogues or brochures are produced for the sole purpose of giving an approximate idea of the
+                                            Equipment described in them. They shall not form part of the Contract or have any contractual force.
+                                            2.6 Fitness for use is for the Customer to determine, no performance objective is expressed or implied by Oceanscan. The
+                                            Equipment may appear to offer comparable or similar specifications to other manufacturers’ products but will not necessarily
+                                            perform identically to such other manufacturers’ products.
+                                            2.7 A quotation for the Equipment given by Oceanscan shall not constitute an offer. A quotation shall only be valid for a period of
+                                            thirty (30) days from its date of issue and shall be subject to availability of the Equipment.
+                                            3. RENTAL PERIOD
+                                            3.1 The Rental Period shall be as set out in the Order, unless the Contract is terminated earlier in accordance with these
+                                            Conditions.
+                                            3.2 The Rental Period may be extended by mutual written agreement of both parties and the daily rate set out in the Order shall
+                                            apply to any extended Rental Period.
+                                            3.3 If the Rental Period has not been extended in accordance with clause 3.2 and the Equipment is not returned to Oceanscan on
+                                            the return date set out in the Order, the Customer will be charged at the daily rate set out in the Order until the Equipment has
+                                            been returned to Oceanscan
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <a class="btn btn-primary" href="@Url.Action("Orders", "Home" , new {cartid=item.ListedProdId,prodimg=item.ProductImg,prodadtitle=item.AdTitle,proddesc=item.ProductDescription,rentalfee=item.RentalFee,rentaldur=item.RentalDuration,cart=item.CartItemId})">Agree and Place Order</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    
+</div>
+}

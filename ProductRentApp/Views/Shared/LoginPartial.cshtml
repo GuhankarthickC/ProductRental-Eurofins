@@ -1,0 +1,149 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </head>
+    <body>
+        <ul class="navbar-nav">
+            @{
+                ViewBag.Username = HttpContextAccessor.HttpContext.Session.GetString("username");
+                ViewBag.adminname = HttpContextAccessor.HttpContext.Session.GetString("adminid");
+                ViewBag.ulocation = HttpContextAccessor.HttpContext.Session.GetString("ulocation");
+                ViewBag.ugmail = HttpContextAccessor.HttpContext.Session.GetString("ugmail");
+                if (ViewBag.adminname != "" && ViewBag.adminname != null)
+                {
+                    <li class="nav-item">
+                                    <form class="form-inline" asp-controller="Admin" asp-action="Index">
+                                        <button type="submit" style="font-family:Georgia, 'Times New Roman', Times, serif;" class="nav-link btn btn-link text-white">MainMenu</button>
+                                    </form>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-danger text-white" style="border-radius: 8px; font-family: Georgia, 'Times New Roman', Times, serif;" title="Manage">Hi :-) @ViewBag.Username@ViewBag.adminname !</a>
+                    </li>
+                    <li class="nav-item">
+                        <form class="form-inline" asp-controller="LogReg" asp-action="logout">
+                            <button type="submit" style="font-family: Georgia, 'Times New Roman', Times, serif;" class="nav-link btn btn-link text-white">Logout</button>
+                        </form>
+                    </li>
+                }
+                else if (ViewBag.Username != null && ViewBag.Username != "")
+                {
+                    <li class="nav-item">
+                        <form class="form-inline" asp-controller="Home" asp-action="MyOrders">
+                            <button type="submit" style="font-family:Georgia, 'Times New Roman', Times, serif;" class="nav-link btn btn-link text-white"><i class="fas fa-bag-shopping"></i> My Orders</button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <form class="form-inline" asp-controller="Home" asp-action="CartItems">
+                            <button type="submit" style="font-family:Georgia, 'Times New Roman', Times, serif;" class="nav-link btn btn-link text-white"><i class="fas fa-shopping-cart"></i> My Cart</button>
+                        </form>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="step5tab" class="nav-link dropdown-toggle text-white" style="border-radius: 8px; font-family: Georgia, 'Times New Roman', Times, serif;" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Profile</a>
+                        <div class="dropdown-menu">
+                            <p class="dropdown-item text-dark" style="border-radius: 8px; font-family: Georgia, 'Times New Roman', Times, serif;">UserName : @ViewBag.Username<br />Gmail : @ViewBag.ugmail<br />City : @ViewBag.ulocation</p>
+                            <div class="dropdown-divider"></div>
+                            <button type="button" class="dropdown-item text-dark btn btn-warning" style="border-radius: 8px; font-family: Georgia, 'Times New Roman', Times, serif;" data-toggle="modal" data-target="#tips-1">
+                                KYC
+                            </button>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-dark" style="border-radius: 8px; font-family: Georgia, 'Times New Roman', Times, serif;" href="@Url.Action("logout", "LogReg")">Logout</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-danger text-white" style="border-radius: 8px; font-family: Georgia, 'Times New Roman', Times, serif;" title="Manage">Hi :-) @ViewBag.Username !</a>
+                    </li>
+                    <li class="nav-item">
+                        <form class="form-inline" asp-controller="LogReg" asp-action="logout">
+                            <button type="submit" style="font-family:Georgia, 'Times New Roman', Times, serif;" class="nav-link btn btn-link text-white">Logout</button>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white" style="font-family:Georgia, 'Times New Roman', Times, serif;" href="@Url.Action("Login", "LogReg") "><i class="fas fa-sign-in" aria-hidden="true"></i> Login</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white" style="font-family:Georgia, 'Times New Roman', Times, serif;" href="@Url.Action("Registration", "LogReg") "><i class="fas fa-user-plus"></i> Register</a>
+                    </li>
+                }
+            }
+        </ul>
+        <div class="modal fade" id="tips-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark text-white">
+                        <h5 class="modal-title text-warning" id="exampleModalLabel">KYC Submission</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <form asp-action="kycsubmission" asp-controller="Home">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4>
+                                            Select Your KYC Document
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                       
+                                            <select name="kycdocument">
+                                                <option>Select Document Type</option>
+                                                <option value="Aadhar card">Aadhar card</option>
+                                                <option value="Pan card">Pan card</option>
+                                                <option value="Driver's License">Driver's License</option>
+                                                <option value="Passport">Passport</option>
+                                            </select>
+                                            <span  class="text-danger"></span>
+                                
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4>
+                                            KYC Document Upload
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        
+                                            <input type="file" name="userkycproof" class="form-control" />
+                                            <span  class="text-danger"></span>
+                                    
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4>
+                                            Upload Your Recent Picture
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="file" name="userselfie" class="form-control" />
+                                        <span  class="text-danger"></span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="Submit KYC" />
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+           
+        </div>
+    </body>
+
+

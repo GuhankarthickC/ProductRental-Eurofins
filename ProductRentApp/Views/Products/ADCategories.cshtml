@@ -1,0 +1,114 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ProductRentApp.Models.ListedProductsPending
+<body>
+    <div id="AppDiv" class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="text-md-center">AD Details</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form asp-action="AddUser">
+                    <div class="form-group">
+                        <label asp-for="ProductCategory" class="control-label"></label>
+                        <input asp-for="ProductCategory" class="form-control" value="@ViewBag.category" readonly />
+                        <span asp-validation-for="ProductCategory" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProductType" class="control-label"></label>
+                        <select id="uploadBtn" asp-for="ProductType" asp-items="@ViewBag.categorylist">
+                            <option>Please select one</option>
+                        </select>
+                        <span asp-validation-for="ProductType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Brand" class="control-label"></label>
+                        <select id="IdModel" asp-for="Brand">
+                            <option>Please select one</option>
+                        </select>
+                        <span asp-validation-for="Brand" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model" class="control-label"></label>
+                        <input asp-for="Model" class="form-control" />
+                        <span asp-validation-for="Model" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RentalDuration" class="control-label"></label>
+                        <select asp-for="RentalDuration">
+                            <option>Please select Duration</option>
+                            <option value="Per Hour">Per Hour</option>
+                            <option value="Per Day">Per Day</option>
+                            <option value="Per Month">Per Month</option>
+                        </select>
+                        <span asp-validation-for="RentalDuration" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RentalFee" class="control-label"></label>
+                        <input type="number" asp-for="RentalFee" class="form-control" placeholder="In Rupees" />
+                        <span asp-validation-for="RentalFee" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City" class="control-label"></label>
+                        <select asp-for="City" asp-items="@ViewBag.cities">
+                            <option>Please select one</option>
+                        </select>
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Pincode" class="control-label"></label>
+                        <input type="number" asp-for="Pincode" class="form-control" />
+                        <span asp-validation-for="Pincode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContactNumber" class="control-label"></label>
+                        <input type="number" asp-for="ContactNumber" class="form-control" />
+                        <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProductDescription" class="control-label"></label>
+                        <input type="text" asp-for="ProductDescription" class="form-control" size="30" />
+                        <span asp-validation-for="ProductDescription" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProductImage" class="control-label"></label>
+                        <input type="file" asp-for="ProductImage" class="form-control" />
+                        <span asp-validation-for="ProductImage" class="text-danger"></span>
+                    </div>
+                    <div class="form-group text-md-center">
+                        <input type="submit" value="Post AD" class="btn btn-primary" onclick="return confirm('You\'re about to post an AD, are you sure to proceed?')" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
+</body>
+@section Scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $('#uploadBtn').on('change', function () {
+                var val = $(this).val();
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "/Products/setvalue",
+                    data: { "value": val },
+                    success: function (data) {
+                        $("#IdModel").empty();
+                        $.each(data, function (id, option) {
+                            $("<option/>").val(option.value).text(option.value).appendTo("#IdModel");
+                        });
+                    }
+                });
+            });
+
+        });
+    </script>
+}
